@@ -20,6 +20,10 @@ import javax.persistence.Table;
     @NamedQuery(
         name = "getUsersCount",
         query = "SELECT COUNT(u) FROM User AS u"
+    ),
+    @NamedQuery(
+        name = "checkLoginIdAndPassword",
+        query = "SELECT u FROM User AS u WHERE u.login_id = :id AND u.password = :pass"
     )
 })
 @Entity

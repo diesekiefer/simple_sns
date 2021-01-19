@@ -38,6 +38,8 @@ public class PostsShowServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("post", p);
+        request.setAttribute("_token", request.getSession().getId());
+        request.getSession().setAttribute("post_id", p.getId());
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/posts/show.jsp");
         rd.forward(request, response);
