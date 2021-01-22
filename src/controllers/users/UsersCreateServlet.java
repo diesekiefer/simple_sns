@@ -1,4 +1,4 @@
-package controllers.posts;
+package controllers.users;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -11,24 +11,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import models.Post;
 import models.User;
-import models.validators.PostValidator;
+import models.validators.UserValidator;
 import utils.DBUtil;
+import utils.EncryptUtil;
 
 /**
- * Servlet implementation class PostsCreateServlet
+ * Servlet implementation class UsersCreateServlet
  */
-@WebServlet("/posts/create")
-public class PostsCreateServlet extends HttpServlet {
+@WebServlet("/users/create")
+public class UsersCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public PostsCreateServlet() {
+    public UsersCreateServlet() {
         super();
     }
 
@@ -40,36 +39,42 @@ public class PostsCreateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            Post p = new Post();
+            User u = new User();
 
-            // ログイン情報をセッションスコープから取得
-            HttpSession session = ((HttpServletRequest)request).getSession();
-            User u = (User)session.getAttribute("login_user");
-            p.setUser_id(u.getId());
-            p.setContent(request.getParameter("content"));
+            u.setLogin_id(request.getParameter("login_id"));
+            u.setUsername(request.getParameter("username"));
+            u.setPassword(
+                EncryptUtil.getPasswordEncrypt(
+                    request.getParameter("password"),
+                        (String)this.getServletContext().getAttribute("pepper")
+                    )
+                );
+
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            p.setCreated_at(currentTime);
+            u.setCreated_at(currentTime);
 
-            List<String> errors = PostValidator.validate(p);
+            List<String> errors = UserValidator.validate(u, true, true);
             if(errors.size() > 0) {
                 em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
-                request.setAttribute("post", p);
+                request.setAttribute("user", u);
                 request.setAttribute("errors", errors);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/posts/new.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/users/new.jsp");
                 rd.forward(request, response);
             } else {
                 em.getTransaction().begin();
-                em.persist(p);
+                em.persist(u);
                 em.getTransaction().commit();
                 request.getSession().setAttribute("flush", "登録が完了しました。");
                 em.close();
 
-                response.sendRedirect(request.getContextPath() + "/posts/index");
+                response.sendRedirect(request.getContextPath() + "/");
             }
         }
+
     }
+
 }

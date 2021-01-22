@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 
             // 社員番号とパスワードが正しいかチェックする
             try {
-                u = em.createNamedQuery("checkLoginCodeAndPassword", User.class)
+                u = em.createNamedQuery("checkLoginIdAndPassword", User.class)
                       .setParameter("id", login_id)
                       .setParameter("pass", password)
                       .getSingleResult();

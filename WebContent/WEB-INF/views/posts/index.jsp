@@ -40,7 +40,13 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='/posts/new' />">新規投稿</a></p>
-
+        <c:choose>
+            <c:when test="${sessionScope.login_user != null}">
+                <p><a href="<c:url value='/posts/new' />">新規投稿</a></p>
+            </c:when>
+            <c:otherwise>
+                <p><a href="<c:url value='/login' />">ログインして投稿する</a></p>
+            </c:otherwise>
+        </c:choose>
     </c:param>
 </c:import>

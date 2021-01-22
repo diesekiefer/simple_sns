@@ -34,7 +34,7 @@ public class Post {
     private Integer id;
 
     @Column(name = "user_id", nullable = false)
-    private String user_id;
+    private Integer user_id;
 
     @Column(name = "content", length=140, nullable = false)
     private String content;
@@ -50,11 +50,11 @@ public class Post {
         this.id = id;
     }
 
-    public String getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 
