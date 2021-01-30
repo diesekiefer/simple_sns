@@ -24,12 +24,12 @@ import javax.persistence.Table;
         query = "SELECT COUNT(p) FROM Post AS p"
     ),
     @NamedQuery(
-        name = "getPostsbyUser",
+        name = "getAllPostsbyUser",
         query = "SELECT p FROM Post AS p WHERE p.user = :user_id ORDER BY p.id DESC"
     ),
     @NamedQuery(
-            name = "checkRegisteredUser_id",
-            query = "SELECT COUNT(p) FROM Post AS p WHERE p.user = :user_id"
+        name = "checkRegisteredUser_id",
+        query = "SELECT COUNT(p) FROM Post AS p WHERE p.user = :user_id"
     )
 })
 @Entity

@@ -32,10 +32,32 @@ public class UsersHomeServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String path_info = request.getPathInfo();
+        String user_loginid = path_info.split("/", 0)[0];
         EntityManager em = DBUtil.createEntityManager();
-        List<Post> posts = em.createNamedQuery("getAllPosts", Post.class)
+        System.out.println(user_loginid);
+
+        // ユーザidが存在するかどうかの確認
+        long users_count = (long)em.createNamedQuery("checkRegisteredLogin_id", Long.class)
+                .setParameter("login_id", user_loginid)
+                  .getSingleResult();
+        em.close();
+        System.out.println(users_count);
+
+        if (users_count == 0){
+            // 404でも返す。
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        em = DBUtil.createEntityManager();
+        List<Post> posts = em.createNamedQuery("getAllPostsbyUser", Post.class)
+                .setParameter("user_id", user_loginid)
                 .setMaxResults(15)
                 .getResultList();
+
+        em.close();
+
         request.setAttribute("posts", posts);
         if(request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
