@@ -17,7 +17,7 @@
                 </tr>
                 <c:forEach var="post" items="${posts}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <td><c:out value="${post.user_id}" /></td>
+                        <td><c:out value="${post.user.username}" /></td>
                         <td><c:out value="${post.content}" /></td>
                         <td>
                             <a href="<c:url value='/posts/show?id=${post.id}' />">詳細を表示</a>

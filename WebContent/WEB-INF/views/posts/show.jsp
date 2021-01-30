@@ -10,8 +10,8 @@
                 <table>
                     <tbody>
                         <tr>
-                            <th>user id</th>
-                            <td><c:out value="${post.user_id}" /></td>
+                            <th>user name</th>
+                            <td><c:out value="${post.user.username}" /></td>
                         </tr>
 
                         <tr>

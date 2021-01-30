@@ -48,7 +48,7 @@ public class LoginFilter implements Filter {
 
 
             // 投稿一覧とアカウント作成は特に制限しない
-            if (!servlet_path.equals("/posts/index") && !servlet_path.equals("/users/new") && !servlet_path.equals("/users/create")){
+            if (!servlet_path.equals("/posts/index") && !servlet_path.equals("/signup") && !servlet_path.equals("/createuser")){
                 if (servlet_path.equals("/login")){
                     // ログインしているのにログイン画面を表示させようとした場合は
                     // システムのトップページにリダイレクト

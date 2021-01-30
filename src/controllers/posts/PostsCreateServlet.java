@@ -45,7 +45,7 @@ public class PostsCreateServlet extends HttpServlet {
             // ログイン情報をセッションスコープから取得
             HttpSession session = ((HttpServletRequest)request).getSession();
             User u = (User)session.getAttribute("login_user");
-            p.setUser_id(u.getId());
+            p.setUser(u);
             p.setContent(request.getParameter("content"));
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
