@@ -7,19 +7,19 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>投稿一覧</h2>
+        <h2><c:out value="${user.username}" />さんのページ</h2>
+
+        <c:if test="${sessionScope.login_user != null}">
+            <a href="<c:url value='/follow/new?user_id=${u.id}'/>">フレンド追加</a>
+        </c:if>
         <table id="post_list">
             <tbody>
                 <tr>
-                    <th>投稿ユーザ</th>
                     <th>投稿内容</th>
                     <th>操作</th>
                 </tr>
                 <c:forEach var="post" items="${posts}" varStatus="status">
                     <tr class="row${status.count % 2}">
-                        <td>
-                            <a href="<c:url value='/homes/${post.user.login_id}' />"><c:out value="${post.user.username}" /></a>
-                        </td>
                         <td><c:out value="${post.content}" /></td>
                         <td>
                             <a href="<c:url value='/posts/show?id=${post.id}' />">詳細を表示</a>

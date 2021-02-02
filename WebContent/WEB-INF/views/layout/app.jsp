@@ -24,7 +24,7 @@
                 </c:when>
                 <c:otherwise>
                     <div id="sign_in">
-                        <a href="<c:url value='/signup' />">アカウント作成</a>
+                        <a href="<c:url value='/users/new' />">アカウント作成</a>
                     </div>
                 </c:otherwise>
                 </c:choose>

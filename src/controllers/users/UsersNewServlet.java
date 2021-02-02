@@ -14,7 +14,7 @@ import models.User;
 /**
  * Servlet implementation class EmployeesNewServlet
  */
-@WebServlet("/signup")
+@WebServlet("/users/new")
 public class UsersNewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

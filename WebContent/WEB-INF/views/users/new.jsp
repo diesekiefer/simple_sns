@@ -3,7 +3,7 @@
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <h2>新規アカウント登録ページ</h2>
-        <form method="POST" action="<c:url value='/createuser' />">
+        <form method="POST" action="<c:url value='/users/create' />">
             <c:if test="${errors != null}">
                 <div id="flush_error">
                     入力内容にエラーがあります。<br />

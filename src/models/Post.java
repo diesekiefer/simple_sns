@@ -25,11 +25,7 @@ import javax.persistence.Table;
     ),
     @NamedQuery(
         name = "getAllPostsbyUser",
-        query = "SELECT p FROM Post AS p WHERE p.user = :user_id ORDER BY p.id DESC"
-    ),
-    @NamedQuery(
-        name = "checkRegisteredUser_id",
-        query = "SELECT COUNT(p) FROM Post AS p WHERE p.user = :user_id"
+        query = "SELECT p FROM Post AS p WHERE p.user.login_id = :login_id ORDER BY p.id DESC"
     )
 })
 @Entity

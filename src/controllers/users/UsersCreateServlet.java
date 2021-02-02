@@ -20,7 +20,7 @@ import utils.EncryptUtil;
 /**
  * Servlet implementation class UsersCreateServlet
  */
-@WebServlet("/createuser")
+@WebServlet("/users/create")
 public class UsersCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -74,7 +74,6 @@ public class UsersCreateServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/");
             }
         }
-
     }
 
 }
