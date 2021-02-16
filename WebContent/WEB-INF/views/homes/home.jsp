@@ -7,11 +7,41 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
+
+        <c:if test="${errors != null}">
+            <div id="flush_error">
+            入力内容にエラーがあります。<br />
+            <c:forEach var="error" items="${errors}">
+                ・<c:out value="${error}" /><br />
+            </c:forEach>
+            </div>
+        </c:if>
+
         <h2><c:out value="${user.username}" />さんのページ</h2>
 
         <c:if test="${sessionScope.login_user != null}">
-            <a href="<c:url value='/follow/new?user_id=${u.id}'/>">フレンド追加</a>
+            <c:if test="${is_followed > 0}">
+                <h2><c:out value="${user.username}" />さんはあなたをフォローしています</h2>
+            </c:if>
+            <c:choose>
+                <c:when test="${is_follow == 0}">
+                    <form method="POST" action="<c:url value='/follows/add?user_id=${user.id}' />">
+                        <input type="hidden" name="_token" value="${_token}" />
+                        <button type="submit">フレンド追加</button>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form method="POST" action="<c:url value='/follows/remove?user_id=${user.id}' />">
+                        <input type="hidden" name="_token" value="${_token}" />
+                        <button type="submit">フレンド解除</button>
+                    </form>
+                </c:otherwise>
+            </c:choose>
         </c:if>
+        <div>
+            <span>フォロー中: <c:out value="${followee_count}" /></span>
+            <span>フォロワー: <c:out value="${follower_count}" /></span>
+        </div>
         <table id="post_list">
             <tbody>
                 <tr>
@@ -30,7 +60,7 @@
         </table>
 
         <div id="pagination">
-            （全 ${employees_count} 件）<br />
+            （全 ${posts_count} 件）<br />
             <c:forEach var="i" begin="1" end="${((posts_count - 1) / 15) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
